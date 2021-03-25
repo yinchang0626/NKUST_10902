@@ -22,9 +22,22 @@ namespace ConsoleApp.Services
                 .Select(x =>
                 {
                     var item = new StationExit();
-                    item.UpdateTime = x.Element("UpdateTime").Value;
                     item.StationID = x.Element("StationID").Value;
+                    item.UpdateTime = x.Element("UpdateTime").Value;
                     item.LocationDescription = x.Element("LocationDescription").Value;
+                    item.Elevator = bool.Parse(x.Element("Elevator").Value);
+                    var stationNameNode = x.Element("StationName");
+                    var exitNameNode= x.Element("ExitName");
+                    item.StationName = new DisplayName()
+                    {
+                        Zh_tw= stationNameNode.Element("Zh_tw").Value,
+                        En= stationNameNode.Element("En").Value
+                    };
+                    item.ExitName = new DisplayName()
+                    {
+                        Zh_tw = exitNameNode.Element("Zh_tw").Value,
+                        En = exitNameNode.Element("En").Value
+                    };
                     return item;
                 })
                 .ToList();

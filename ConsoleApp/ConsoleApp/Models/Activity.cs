@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,52 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
-    public class Activity
+    public partial class Activity
     {
-        public string PRGID { get; set; }
-        public string ORGNAME { get; set; }
-        public string ITEMDESC { get; set; }
+        [JsonProperty("PRGID")]
+        public long PrgId { get; set; }
+
+        [JsonProperty("PRGNAME")]
+        public string PrgName { get; set; }
+
+        [JsonProperty("PRGACT")]
+        public string PrgAct { get; set; }
+
+        [JsonProperty("PRGDATE")]
+        public string PrgDate { get; set; }
+
+        [JsonProperty("PRGSTIME")]
+        public string PrgStime { get; set; }
+
+        [JsonProperty("PRGETIME")]
+        public string PrgEtime { get; set; }
+
+        [JsonProperty("ORGNAME")]
+        public string OrgName { get; set; }
+
+        [JsonProperty("PRGPLACE")]
+        public string PrgPlace { get; set; }
+
+        [JsonProperty("PRGAG")]
+        public string PrgAg { get; set; }
+
+        [JsonProperty("PRGCONT")]
+        public string PrgCont { get; set; }
+
+        [JsonProperty("PRGTICKET")]
+        public string PrgTicket { get; set; }
+
+        [JsonProperty("TICKETSYSURL")]
+        public string TicketSysurl { get; set; }
+
+        [JsonProperty("ITEMDESC")]
+        public string ItemDesc { get; set; }
+
+        [JsonProperty("IMAGE1")]
+        public string Image1 { get; set; }
+
+        [JsonProperty("IMAGE2")]
+        public string Image2 { get; set; }
     }
 }
+
