@@ -43,7 +43,7 @@ namespace ConsoleApp.Models
         public string PrgTicket { get; set; }
 
         [JsonProperty("TICKETSYSURL")]
-        public string TicketSysurl { get; set; }
+        public string TicketSysUrl { get; set; }
 
         [JsonProperty("ITEMDESC")]
         public string ItemDesc { get; set; }
