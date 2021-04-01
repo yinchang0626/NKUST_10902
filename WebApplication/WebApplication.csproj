@@ -13,4 +13,26 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MyTool">
+      <HintPath>..\..\..\11004\wwwroot\bin\MyTool.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMaker.BLL">
+      <HintPath>..\..\..\11004\wwwroot\bin\WebMaker.BLL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App_Data\北捷站點.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\高雄活動.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

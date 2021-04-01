@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ConsoleApp.Models.Activity>
+
+<h1>Activity List</h1>
+<table>
+    <thead>
+        <tr>
+            <th>PrgId</th>
+            <th>PrgName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.PrgId</td>
+                    <td>@item.PrgName</td>
+                </tr>
+            }
+        }
+
+
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+
+@{
+}
