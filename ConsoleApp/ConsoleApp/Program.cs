@@ -16,7 +16,7 @@ namespace ConsoleApp
             Console.WriteLine(string.Format("分析完成，共有{0}筆資料", datas.Count));
             datas.ForEach(x =>
             {
-                Console.WriteLine(string.Format("編號 :{0} 名稱:{1}({2}) 描述:{3}", x.StationID, x.StationName?.Zh_tw, x.ExitName.Zh_tw, x.LocationDescription));
+                Console.WriteLine(string.Format("編號 :{0} 名稱:{1}({2}) 描述:{3}", x.StationID, x.StationName, x.ExitName, x.LocationDescription));
             });
 
 

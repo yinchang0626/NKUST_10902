@@ -28,16 +28,8 @@ namespace ConsoleApp.Services
                     item.Elevator = bool.Parse(x.Element("Elevator").Value);
                     var stationNameNode = x.Element("StationName");
                     var exitNameNode= x.Element("ExitName");
-                    item.StationName = new DisplayName()
-                    {
-                        Zh_tw= stationNameNode.Element("Zh_tw").Value,
-                        En= stationNameNode.Element("En").Value
-                    };
-                    item.ExitName = new DisplayName()
-                    {
-                        Zh_tw = exitNameNode.Element("Zh_tw").Value,
-                        En = exitNameNode.Element("En").Value
-                    };
+                    item.StationName = stationNameNode.Element("Zh_tw").Value;
+                    item.ExitName  = exitNameNode.Element("Zh_tw").Value;
                     return item;
                 })
                 .ToList();

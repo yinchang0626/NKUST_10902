@@ -9,6 +9,7 @@ namespace ConsoleApp.Models
 {
     public partial class Activity
     {
+        public long Id { get; set; }
         [JsonProperty("PRGID")]
         public long PrgId { get; set; }
 

@@ -1,9 +1,20 @@
 ﻿@model IEnumerable<ConsoleApp.Models.Activity>
 
 <h1>Activity List</h1>
+
+<a href="/Activity/Create">新增</a>
+
+<form action="/Activity/Search" method="post">
+    <label>Keyword:</label><br>
+    <input type="text" id="Keyword" name="Keyword" placeholder="請輸入您要查詢的活動">
+
+    <input type="submit" value="查詢" />
+</form>
+
 <table>
     <thead>
         <tr>
+            <th>Id</th>
             <th>PrgId</th>
             <th>PrgName</th>
         </tr>
@@ -13,10 +24,11 @@
         {
             foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.PrgId</td>
-                    <td>@item.PrgName</td>
-                </tr>
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.PrgId</td>
+            <td>@item.PrgName</td>
+        </tr>
             }
         }
 
