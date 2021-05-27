@@ -1,0 +1,135 @@
+﻿@model IEnumerable<YC.Models.Question>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>題目</h1>
+<select class="form-control" id="groupSelect" name="groupSelect">
+</select>
+<select class="form-control" id="typeSelect" name="typeSelect">
+</select>
+<hr />
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateModal">
+    Create New
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="CreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Seq</label>
+                    <input name="Seq" id="Seq" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Text</label>
+                    <input name="Text" id="Text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label"> Answer</label>
+                    <input name="Answer" id="Answer" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="NewButton">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div id="table"></div>
+@section Scripts{
+    <script type="text/javascript">
+        function loadTable() {
+            let url = '/Questions/QuestionsList?typeId=' + $('#typeSelect').val();
+            $('#table').load(url, () => {
+                $('.deleteButton').click((btn) => {
+                    if (confirm('Sure?')) {
+                        $.ajax({
+                            method: "post",
+                            url: "/api/Data/DeleteQuestion?id="+parseInt($(btn.target).parent().siblings('#id').text())
+                        }).done(() => {
+                            loadTable();
+                            $('#CreateModal').modal('hide');
+                        });
+                    }
+
+                });
+            });
+        }
+
+        function main() {
+            $.getJSON('/api/Data/QuestionGroups', (json) => {
+                json.forEach((g) => {
+                    $('#groupSelect').append($('<option>', {
+                        value: g.id,
+                        text: g.name
+                    }));
+                });
+                $('#groupSelect').val(json[0].id).change();
+            });
+        }
+
+        $(() => {
+            $('#typeSelect').change(() => {
+                loadTable();
+            });
+
+            $('#groupSelect').change(() => {
+                let url = '/api/Data/QuestionTypes?groupId=' + $('#groupSelect').val();
+                $.getJSON(url, (json) => {
+                    $('#typeSelect').find('option').remove();
+                    json.forEach((t) => {
+                        $('#typeSelect').append($('<option>', {
+                            value: t.id,
+                            text: t.title
+                        }));
+                    });
+                    $('#typeSelect').val(json[0].id).change();
+                });
+            });
+
+            $('#NewButton').click(() => {
+                let data = {
+                    Seq: parseInt($('#Seq').val()),
+                    Text: $('#Text').val(),
+                    Answer: $('#Answer').val(),
+                    QuestionTypeId: parseInt($('#typeSelect').val())
+                };
+
+                $.ajax({
+                    method: "post",
+                    contentType: 'application/json',
+                    url: "/api/Data/CreateQuestion",
+                    data: JSON.stringify(data)
+                }).done(() => {
+                    loadTable();
+                    $('#CreateModal').modal('hide');
+                });
+
+
+            });
+
+            main();
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+}
