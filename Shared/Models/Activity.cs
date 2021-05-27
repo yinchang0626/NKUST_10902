@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
+    public class ActivityDto
+    {
+        public Activity Activity { get; set; }
+        public string  Token { get; set; }
+    }
+
     public partial class Activity
     {
         public long Id { get; set; }

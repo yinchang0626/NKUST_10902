@@ -5,9 +5,10 @@
 <a href="/Activity/Create">新增</a>
 
 <form action="/Activity/Search" method="post">
-    <label>Keyword:</label><br>
-    <input type="text" id="Keyword" name="Keyword" placeholder="請輸入您要查詢的活動">
-
+    <input type="text" 
+           id="Keyword" name="Keyword"
+           value="@ViewBag.SearchParams.Keyword"
+           placeholder="請輸入您要查詢的活動">
     <input type="submit" value="查詢" />
 </form>
 
@@ -17,6 +18,7 @@
             <th>Id</th>
             <th>PrgId</th>
             <th>PrgName</th>
+            <th>Func</th>
         </tr>
     </thead>
     <tbody>
@@ -24,11 +26,15 @@
         {
             foreach (var item in Model)
             {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.PrgId</td>
-            <td>@item.PrgName</td>
-        </tr>
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.PrgId</td>
+                    <td>@item.PrgName</td>
+                    <td>
+                        <a href="/Activity/Edit/@item.Id">Edit</a>
+                    </td>
+                    <td><a id="delBtn" href="/Activity/Delete/@item.Id">Delete</a></td>
+                </tr>
             }
         }
 
@@ -40,6 +46,16 @@
     </tfoot>
 </table>
 
-
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#delBtn').on('click', (e) => {
+                return confirm('are you sure?')
+            });
+        });
+    </script>
+}
 @{
+
 }

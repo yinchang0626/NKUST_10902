@@ -23,8 +23,7 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
-            return View();
+            return Search(new ActivitySearchParams());
         }
         [HttpPost]
         public IActionResult Search(ActivitySearchParams searchParams)
@@ -36,14 +35,10 @@ namespace WebApplication.Controllers
             }
 
             query = query.OrderByDescending(x => x.Id);
-            //if (!string.IsNullOrEmpty(searchParams.Order)) 
-            //{
-
-            //    query = query.OrderBy(x => EF.Property<string>(x, searchParams.Order));
-            //}
 
             query.Skip((searchParams.PageIndex) * 30).Take(30);
 
+            ViewBag.SearchParams = searchParams;
 
             return View("Index", query.ToList());
         }
@@ -56,12 +51,6 @@ namespace WebApplication.Controllers
 
             var stationExitService = new ConsoleApp.Services.ImportXmlService();
             List<StationExit> stationExitDatas = stationExitService.LoadFormFile(ConsoleApp.Utils.FilePath.GetFullPath("北捷站點.xml"));
-
-            //activityDatas.ForEach(x =>
-            //{
-            //    applicationDbContext.Activities.Add(x);
-
-            //});
 
             applicationDbContext.Activities.AddRange(activityDatas);
             applicationDbContext.StationExits.AddRange(stationExitDatas);
@@ -79,14 +68,41 @@ namespace WebApplication.Controllers
         [HttpPost]
         public IActionResult Create(ConsoleApp.Models.Activity create)
         {
-            //var count = applicationDbContext.Activities.Max(x => x.Id);
-
-            //create.Id = count + 1;
-            create.Id = 0;
 
             applicationDbContext.Activities.Add(create);
 
             applicationDbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(long id)
+        {
+
+            var model = applicationDbContext.Activities.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Edit(ConsoleApp.Models.Activity edit)
+        {
+
+            applicationDbContext.Entry(edit).State = EntityState.Modified;
+
+            applicationDbContext.Update(edit);
+
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(long id)
+        {  
+            var model = applicationDbContext.Activities.Find(id);
+
+            applicationDbContext.Activities.Remove(model);
+
+            applicationDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
